@@ -67,6 +67,7 @@
                                   v-model:value="inputData"
                                   :copy-on-click="copyOnClick"
                                   @onInputClick="onInputClick"
+                                  @onInputKeyPress="onInputKeyPress"
                                   @onCopyToClipboard="onCopyToClipboard"/>
         <div class="slot-wrapper">
           <slot name="after-form-builder"></slot>
@@ -124,6 +125,7 @@
         :disable="false"
         :copy-on-click="copyOnClick"
         @onInputClick="onInputClick"
+        @onInputKeyPress="onInputKeyPress"
         @onCopyToClipboard="onCopyToClipboard"
     >
       <template #before-form-builder>
@@ -302,6 +304,11 @@ export default {
     }
   },
   methods: {
+    onInputKeyPress(data) {
+      if (data.key === 'Enter' || data.keyCode === 13) {
+        this.search()
+      }
+    },
     getChipTitle (item) {
       const value = this.getValidChainedObject(item, this.itemIndicatorKey)
       return value ? value : '_'
